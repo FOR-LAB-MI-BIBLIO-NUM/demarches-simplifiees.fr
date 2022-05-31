@@ -30,6 +30,8 @@ class ProcedureRevision < ApplicationRecord
 
   scope :ordered, -> { order(:created_at) }
 
+  validate :conditions_are_valid?
+
   def build_champs
     types_de_champ_public.map { |tdc| tdc.build_champ(revision: self) }
   end
@@ -439,5 +441,15 @@ class ProcedureRevision < ApplicationRecord
     end
     coordinate.update!(type_de_champ: cloned_type_de_champ)
     cloned_type_de_champ
+  end
+
+  def conditions_are_valid?
+    stable_ids = types_de_champ_public.map(&:stable_id)
+
+    types_de_champ_public
+      .map.with_index
+      .filter_map { |tdc, i| tdc.condition.present? ? [tdc, i] : nil }
+      .flat_map { |tdc, i| tdc.condition.errors(stable_ids.take(i)) }
+      .each { |message| errors.add(:condition, message) }
   end
 end
