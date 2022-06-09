@@ -16,6 +16,8 @@ module Logic
     case [left.type, right.type]
     in [a, ^a] # syntax for same type
       true
+    in [:enum, :string]
+      left.type_de_champ.drop_down_list_enabled_non_empty_options.include?(right.value)
     else
       false
     end

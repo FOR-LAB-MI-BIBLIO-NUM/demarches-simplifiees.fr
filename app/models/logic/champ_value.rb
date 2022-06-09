@@ -12,7 +12,7 @@ class Logic::ChampValue < Logic::Term
       champ(champs).true?
     when all_types.fetch(:integer_number), all_types.fetch(:decimal_number)
       champ(champs).for_api
-    when all_types.fetch(:text)
+    when all_types.fetch(:drop_down_list), all_types.fetch(:text)
       champ(champs).value
     end
   end
@@ -28,6 +28,8 @@ class Logic::ChampValue < Logic::Term
       :number
     when all_types.fetch(:text)
       :string
+    when all_types.fetch(:drop_down_list)
+      :enum
     end
   end
 
