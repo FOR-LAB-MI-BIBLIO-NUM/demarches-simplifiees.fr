@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_20_173939) do
+ActiveRecord::Schema.define(version: 2022_06_13_130322) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -758,7 +758,7 @@ ActiveRecord::Schema.define(version: 2022_05_20_173939) do
     t.bigint "target_model_id", null: false
     t.string "target_model_type", null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.index ["user_id"], name: "index_targeted_user_links_on_user_id"
   end
 
